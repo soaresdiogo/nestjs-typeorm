@@ -38,7 +38,11 @@ export class User {
   }
 
   addTask(title: string): Task {
-    const newTask = new Task(this._generateTaskId(), title, TaskStatus.PENDING);
+    const newTask = new Task({
+      id: this._generateTaskId(),
+      title: title,
+      status: TaskStatus.PENDING,
+    });
     this._tasks.push(newTask);
     return newTask;
   }

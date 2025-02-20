@@ -7,7 +7,7 @@ export class CreateUserUseCase {
 
   async execute(name: string, email: string): Promise<User> {
     const user = new User(this.generateId(), name, email);
-    await this.userRepository.save(user);
+    await this.userRepository.create(user);
     return user;
   }
 

@@ -5,7 +5,7 @@ import { User } from '@/domain/enterprise/entities/user';
 export class InMemoryUserRepository implements UserRepository {
   private users: User[] = [];
 
-  async save(user: User): Promise<void> {
+  async create(user: User): Promise<void> {
     const index = this.users.findIndex((u) => u.id === user.id);
     if (index !== -1) {
       this.users[index] = user;
