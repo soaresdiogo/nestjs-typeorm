@@ -1,5 +1,5 @@
 import { Task } from '@/domain/enterprise/entities/task';
-import { TaskEntity } from '../entities/task-entity';
+import { TaskEntity } from '../entities/task.entity';
 
 export class TypeORMTaskMapper {
   static toDomain(raw: TaskEntity): Task {

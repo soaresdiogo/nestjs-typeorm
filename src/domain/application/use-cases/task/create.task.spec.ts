@@ -1,6 +1,6 @@
 import { User } from '@/domain/enterprise/entities/user';
-import { CreateTaskUseCase } from './create-task';
-import { InMemoryUserRepository } from '@test/repositories/in-memory-users-repository';
+import { CreateTaskUseCase } from './create.task';
+import { InMemoryUserRepository } from '@test/repositories/in.memory.users.repository';
 
 describe('CreateTaskUseCase', () => {
   let userRepository: InMemoryUserRepository;

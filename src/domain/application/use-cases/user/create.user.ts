@@ -1,5 +1,5 @@
 import { User } from '@/domain/enterprise/entities/user';
-import { UserRepository } from '../../repositories/user-repository';
+import { UserRepository } from '../../repositories/user.repository';
 import { randomUUID } from 'node:crypto';
 
 export class CreateUserUseCase {

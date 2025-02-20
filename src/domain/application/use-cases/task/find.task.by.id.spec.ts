@@ -1,7 +1,7 @@
 import { Task } from '@/domain/enterprise/entities/task';
 import { User } from '@/domain/enterprise/entities/user';
-import { FindTaskByIdUseCase } from './find-task-by-id';
-import { InMemoryUserRepository } from '../../../../../test/repositories/in-memory-users-repository';
+import { FindTaskByIdUseCase } from './find.task.by.id';
+import { InMemoryUserRepository } from '../../../../../test/repositories/in.memory.users.repository';
 
 describe('FindTaskByIdUseCase', () => {
   let userRepository: InMemoryUserRepository;

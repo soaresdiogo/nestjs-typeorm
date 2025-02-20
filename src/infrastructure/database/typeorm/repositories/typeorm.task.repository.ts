@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TaskRepository } from '@/domain/application/repositories/task-repository';
+import { TaskRepository } from '@/domain/application/repositories/task.repository';
 import { Task } from '@/domain/enterprise/entities/task';
-import { TaskEntity } from '../entities/task-entity';
-import { TypeORMTaskMapper } from '../mappers/typeorm-task.mapper';
+import { TaskEntity } from '../entities/task.entity';
+import { TypeORMTaskMapper } from '../mappers/typeorm.task.mapper';
 
 @Injectable()
 export class TypeORMTaskRepository implements TaskRepository {
