@@ -1,5 +1,5 @@
 import { Task } from '@/domain/enterprise/entities/task';
-import { UserRepository } from '../../repositories/user-repository';
+import { UserRepository } from '../../repositories/user.repository';
 
 export class FindTaskByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}

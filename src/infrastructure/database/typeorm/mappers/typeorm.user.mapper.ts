@@ -1,6 +1,6 @@
 import { User } from '@/domain/enterprise/entities/user';
-import { TypeORMTaskMapper } from './typeorm-task.mapper';
-import { UserEntity } from '../entities/user-entity';
+import { TypeORMTaskMapper } from './typeorm.task.mapper';
+import { UserEntity } from '../entities/user.entity';
 
 export class TypeORMUserMapper {
   static toDomain(raw: UserEntity): User {

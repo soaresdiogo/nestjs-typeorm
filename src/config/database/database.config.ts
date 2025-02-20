@@ -1,18 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
-import { EnvConfig } from '../env/entities/EnvConfig';
-import { UserEntity } from '@/infrastructure/database/typeorm/entities/user-entity';
-import { TaskEntity } from '@/infrastructure/database/typeorm/entities/task-entity';
+import { EnvConfig } from '../env/entities/env.config';
+import { UserEntity } from '@/infrastructure/database/typeorm/entities/user.entity';
+import { TaskEntity } from '@/infrastructure/database/typeorm/entities/task.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService<EnvConfig>) {}
 
-  createTypeOrmOptions(): TypeOrmModuleOptions {
-    const dbType = this.configService.get<'postgres'>('DB_TYPE', {
-      infer: true,
-    });
+  createTypeOrmOptions(): TypeOrmModuleOptions & { type: 'postgres' } {
     const dbHost = this.configService.get<string>('DB_HOST', { infer: true });
     const dbPort = this.configService.get<number>('DB_PORT', { infer: true });
     const dbUsername = this.configService.get<string>('DB_USERNAME', {
@@ -23,19 +20,12 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     });
     const dbName = this.configService.get<string>('DB_NAME', { infer: true });
 
-    if (
-      !dbType ||
-      !dbHost ||
-      !dbPort ||
-      !dbUsername ||
-      !dbPassword ||
-      !dbName
-    ) {
+    if (!dbHost || !dbPort || !dbUsername || !dbPassword || !dbName) {
       throw new Error('Missing database configuration');
     }
 
     return {
-      type: dbType as 'postgres',
+      type: 'postgres',
       host: dbHost,
       port: dbPort,
       username: dbUsername,

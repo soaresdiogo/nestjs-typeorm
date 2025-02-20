@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Task } from './Task';
-import { TaskStatus } from './task-status';
+import { TaskStatus } from './task.status';
 
 export class User {
   private _id: string;

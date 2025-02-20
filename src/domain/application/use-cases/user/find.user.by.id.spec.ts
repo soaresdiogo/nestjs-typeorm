@@ -1,6 +1,6 @@
 import { User } from '@/domain/enterprise/entities/user';
-import { InMemoryUserRepository } from '@test/repositories/in-memory-users-repository';
-import { FindUserByIdUseCase } from './find-user-by-id';
+import { InMemoryUserRepository } from '@test/repositories/in.memory.users.repository';
+import { FindUserByIdUseCase } from './find.user.by.id';
 
 describe('FindUserByIdUseCase', () => {
   let userRepository: InMemoryUserRepository;

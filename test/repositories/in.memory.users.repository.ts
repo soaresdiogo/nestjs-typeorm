@@ -1,4 +1,4 @@
-import { UserRepository } from '@/domain/application/repositories/user-repository';
+import { UserRepository } from '@/domain/application/repositories/user.repository';
 import { Task } from '@/domain/enterprise/entities/task';
 import { User } from '@/domain/enterprise/entities/user';
 

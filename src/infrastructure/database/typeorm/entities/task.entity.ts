@@ -1,4 +1,3 @@
-import { TaskStatus } from '@/domain/enterprise/entities/task-status';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,7 +6,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { UserEntity } from './user-entity';
+import { UserEntity } from './user.entity';
+import { TaskStatus } from '../../../../domain/enterprise/entities/task.status';
 
 @Entity('tasks')
 export class TaskEntity {

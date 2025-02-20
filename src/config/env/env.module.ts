@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
-import { EnvConfig } from './entities/EnvConfig';
+import { EnvConfig } from './entities/env.config';
 import { validateSync } from 'class-validator';
 
 @Module({
