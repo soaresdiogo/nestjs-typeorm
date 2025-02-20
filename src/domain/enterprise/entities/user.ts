@@ -1,6 +1,6 @@
-import { randomUUID } from 'node:crypto';
 import { Task } from './Task';
 import { TaskStatus } from './task.status';
+import { v4 as uuidv4 } from 'uuid';
 
 export class User {
   private _id: string;
@@ -48,6 +48,6 @@ export class User {
   }
 
   private _generateTaskId(): string {
-    return randomUUID();
+    return uuidv4();
   }
 }

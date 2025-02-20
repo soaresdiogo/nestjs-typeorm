@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsString, IsEnum, IsInt, IsDefined } from 'class-validator';
 
 export class EnvConfig {
@@ -11,7 +12,8 @@ export class EnvConfig {
 
   @IsDefined()
   @IsInt()
-  DB_PORT: number = Number.parseInt(process.env.DB_PORT || '5432');
+  @Transform(({ value }) => Number(value))
+  DB_PORT: number = process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432;
 
   @IsDefined()
   @IsString()

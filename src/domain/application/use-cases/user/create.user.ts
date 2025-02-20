@@ -1,6 +1,6 @@
 import { User } from '@/domain/enterprise/entities/user';
 import { UserRepository } from '../../repositories/user.repository';
-import { randomUUID } from 'node:crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 export class CreateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
@@ -12,6 +12,6 @@ export class CreateUserUseCase {
   }
 
   private generateId(): string {
-    return randomUUID();
+    return uuidv4();
   }
 }
