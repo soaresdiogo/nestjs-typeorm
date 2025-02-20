@@ -12,8 +12,8 @@ describe('FindAllUsersUseCase', () => {
   });
 
   it('should find all users', async () => {
-    await userRepository.save(new User('1', 'User 1', 'user1@example.com'));
-    await userRepository.save(new User('2', 'User 2', 'user2@example.com'));
+    await userRepository.create(new User('1', 'User 1', 'user1@example.com'));
+    await userRepository.create(new User('2', 'User 2', 'user2@example.com'));
     const users = await findAllUsersUseCase.execute();
     expect(users.length).toBe(2);
   });

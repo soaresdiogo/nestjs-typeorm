@@ -1,5 +1,11 @@
 import { TaskStatus } from './task-status';
 
+interface TaskProps {
+  id: string;
+  title: string;
+  description?: string;
+  status: TaskStatus;
+}
 export class Task {
   private _id: string;
   private _title: string;
@@ -7,12 +13,9 @@ export class Task {
   private _status: TaskStatus;
   private _createdAt: Date;
 
-  constructor(
-    id: string,
-    title: string,
-    status: TaskStatus = TaskStatus.PENDING,
-    description?: string
-  ) {
+  constructor(props: TaskProps) {
+    const { id, title, description, status = TaskStatus.PENDING } = props;
+
     if (!title || title.trim().length === 0) {
       throw new Error('Title cannot be empty');
     }

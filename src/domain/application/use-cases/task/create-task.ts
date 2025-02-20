@@ -11,7 +11,7 @@ export class CreateTaskUseCase {
     }
 
     const task = user.addTask(title);
-    await this.userRepository.save(user);
+    await this.userRepository.create(user);
     return task;
   }
 }

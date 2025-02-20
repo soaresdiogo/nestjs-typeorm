@@ -15,7 +15,7 @@ describe('FindTaskByIdUseCase', () => {
   it('should find a task by ID', async () => {
     const user = new User('1', 'Task Owner', 'owner@example.com');
     const task = user.addTask('Task to Find');
-    await userRepository.save(user);
+    await userRepository.create(user);
 
     const foundTask = await findTaskByIdUseCase.execute(user.id, task.id);
 

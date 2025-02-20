@@ -16,7 +16,7 @@ describe('FindAllTasksUseCase', () => {
     const user = new User('1', 'Task Owner', 'owner@example.com');
     user.addTask('Task 1');
     user.addTask('Task 2');
-    await userRepository.save(user);
+    await userRepository.create(user);
 
     const tasks = await findAllTasksUseCase.execute(user.id);
     expect(tasks.length).toBe(2);
