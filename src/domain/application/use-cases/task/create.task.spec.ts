@@ -12,7 +12,11 @@ describe('CreateTaskUseCase', () => {
   });
 
   it('should create a task for a user', async () => {
-    const user = new User('1', 'Task Owner', 'owner@example.com');
+    const user = new User({
+      id: '1',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+    });
     await userRepository.create(user);
     const task = await createTaskUseCase.execute(user.id, 'New Task');
     expect(task).toBeDefined();

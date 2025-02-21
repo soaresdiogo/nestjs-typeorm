@@ -1,8 +1,8 @@
 {
   "name": "nestjs-typeorm",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "This project is an example of using NestJS with TypeORM and class-validator. It follows best practices and a clean architecture.",
+  "author": "Diogo Soares",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

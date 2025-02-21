@@ -13,7 +13,11 @@ describe('FindAllTasksUseCase', () => {
   });
 
   it('should find all tasks for a user', async () => {
-    const user = new User('1', 'Task Owner', 'owner@example.com');
+    const user = new User({
+      id: '1',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+    });
     user.addTask('Task 1');
     user.addTask('Task 2');
     await userRepository.create(user);
