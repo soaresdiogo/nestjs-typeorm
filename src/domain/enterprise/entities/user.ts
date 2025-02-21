@@ -1,6 +1,12 @@
-import { randomUUID } from 'node:crypto';
 import { Task } from './Task';
 import { TaskStatus } from './task.status';
+import { v4 as uuidv4 } from 'uuid';
+
+interface UserProps {
+  id?: string;
+  name: string;
+  email: string;
+}
 
 export class User {
   private _id: string;
@@ -8,7 +14,7 @@ export class User {
   private _email: string;
   private _tasks: Task[] = [];
 
-  constructor(id: string, name: string, email: string) {
+  constructor({ id, name, email }: UserProps) {
     if (!name || name.trim().length === 0) {
       throw new Error('Name cannot be empty');
     }
@@ -16,9 +22,9 @@ export class User {
       throw new Error('Invalid email');
     }
 
-    this._id = id;
     this._name = name;
     this._email = email;
+    this._id = id || uuidv4();
   }
 
   get id(): string {
@@ -48,6 +54,6 @@ export class User {
   }
 
   private _generateTaskId(): string {
-    return randomUUID();
+    return uuidv4();
   }
 }

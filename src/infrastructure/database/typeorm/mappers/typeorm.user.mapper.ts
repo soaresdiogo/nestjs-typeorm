@@ -4,7 +4,7 @@ import { UserEntity } from '../entities/user.entity';
 
 export class TypeORMUserMapper {
   static toDomain(raw: UserEntity): User {
-    const user = new User(raw.id, raw.name, raw.email);
+    const user = new User({ name: raw.name, email: raw.email });
     if (raw.tasks) {
       for (const taskEntity of raw.tasks) {
         const task = TypeORMTaskMapper.toDomain(taskEntity);

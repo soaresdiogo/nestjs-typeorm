@@ -12,7 +12,11 @@ describe('FindUserByIdUseCase', () => {
   });
 
   it('should find a user by ID', async () => {
-    const user = new User('1', 'Jane Doe', 'jane@example.com');
+    const user = new User({
+      id: '1',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+    });
     await userRepository.create(user);
     const foundUser = await findUserByIdUseCase.execute('1');
     expect(foundUser).toEqual(user);
