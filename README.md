@@ -42,14 +42,12 @@ npm install
 
 ```env
 # Database
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=nestjs_typeorm
-
-# Application
-PORT=3000
+DB_TYPE=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_NAME=todo-list
 NODE_ENV=development
 ```
 
