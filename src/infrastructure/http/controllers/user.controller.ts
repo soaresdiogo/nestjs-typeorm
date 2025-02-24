@@ -4,12 +4,9 @@ import {
   Get,
   NotFoundException,
   Param,
-  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
-import { User } from '@/domain/enterprise/entities/user';
-import { UserRepository } from '@/domain/application/repositories/user.repository';
 import {
   ApiTags,
   ApiOperation,
@@ -17,11 +14,18 @@ import {
   ApiParam,
   ApiBody,
 } from '@nestjs/swagger';
+import { CreateUserUseCase } from '@/domain/application/use-cases/user/create.user';
+import { FindAllUsersUseCase } from '@/domain/application/use-cases/user/find.all';
+import { FindUserByIdUseCase } from '@/domain/application/use-cases/user/find.user.by.id';
 
 @ApiTags('Users')
 @Controller('api/users')
 export class UserController {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly findAllUsersUseCase: FindAllUsersUseCase,
+    private readonly findUserByIdUseCase: FindUserByIdUseCase
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a user' })
@@ -35,12 +39,18 @@ export class UserController {
     description: 'Bad Request: Invalid input data.',
   })
   async create(@Body() createUserDto: UserDto) {
-    const user = new User({
-      name: createUserDto.name,
-      email: createUserDto.email,
-    });
-    await this.userRepository.create(user);
-    return { message: 'User created successfully' };
+    const user = await this.createUserUseCase.execute(
+      createUserDto.name,
+      createUserDto.email
+    );
+    return {
+      message: 'User created successfully',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    };
   }
 
   @Get()
@@ -50,7 +60,7 @@ export class UserController {
     description: 'List of users retrieved successfully.',
   })
   async findAll() {
-    return await this.userRepository.findAll();
+    return await this.findAllUsersUseCase.execute();
   }
 
   @Get(':id')
@@ -64,12 +74,15 @@ export class UserController {
     status: 404,
     description: 'User not found.',
   })
-  async findOne(@Param('id', ParseUUIDPipe) id: string) {
-    console.log('Received ID:', id);
-    const user = await this.userRepository.findById(id);
+  async findOne(@Param('id') id: string) {
+    const user = await this.findUserByIdUseCase.execute(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
   }
 }

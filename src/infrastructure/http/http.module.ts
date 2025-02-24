@@ -6,18 +6,19 @@ import { CreateUserUseCase } from '@/domain/application/use-cases/user/create.us
 import { FindAllTasksUseCase } from '@/domain/application/use-cases/task/find.all';
 import { FindUserByIdUseCase } from '@/domain/application/use-cases/user/find.user.by.id';
 import { CreateTaskUseCase } from '@/domain/application/use-cases/task/create.task';
-import { FindTaskByIdUseCase } from '@/domain/application/use-cases/task/find.task.by.id';
+import { DeleteTaskUseCase } from '@/domain/application/use-cases/task/delete.task';
+import { FindAllUsersUseCase } from '@/domain/application/use-cases/user/find.all';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [UserController, TaskController],
   providers: [
     CreateUserUseCase,
-    FindAllTasksUseCase,
+    FindAllUsersUseCase,
     FindUserByIdUseCase,
     CreateTaskUseCase,
     FindAllTasksUseCase,
-    FindTaskByIdUseCase,
+    DeleteTaskUseCase,
   ],
 })
 export class HttpModule {}

@@ -3,13 +3,13 @@ import { TaskStatus } from './task.status';
 interface TaskProps {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   status: TaskStatus;
 }
 export class Task {
   private _id: string;
   private _title: string;
-  private _description?: string;
+  private _description: string;
   private _status: TaskStatus;
   private _createdAt: Date;
 
@@ -41,7 +41,7 @@ export class Task {
     return this._title;
   }
 
-  get description(): string | undefined {
+  get description(): string {
     return this._description;
   }
 
