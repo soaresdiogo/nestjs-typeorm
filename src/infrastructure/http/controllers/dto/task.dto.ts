@@ -14,12 +14,5 @@ export class TaskDto {
     description: 'Description of task',
     example: 'Write a blog post about NestJS',
   })
-  description?: string;
-
-  @IsOptional()
-  @ApiProperty({
-    description: 'Status of task',
-    example: 'IN_PROGRESS | PENDING | COMPLETED',
-  })
-  status?: TaskStatus;
+  description: string;
 }

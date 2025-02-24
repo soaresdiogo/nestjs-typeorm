@@ -18,7 +18,7 @@ export class TaskEntity {
   title: string;
 
   @Column({ nullable: true })
-  description?: string;
+  description: string;
 
   @Column({
     type: 'enum',

@@ -4,16 +4,10 @@ import {
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   Param,
-  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { TaskDto } from './dto/task.dto';
-import { Task } from '@/domain/enterprise/entities/Task';
-import { TaskStatus } from '@/domain/enterprise/entities/task.status';
-import { v4 as uuidv4 } from 'uuid';
-import { TaskRepository } from '@/domain/application/repositories/task.repository';
 import {
   ApiBody,
   ApiOperation,
@@ -21,11 +15,18 @@ import {
   ApiTags,
   ApiParam,
 } from '@nestjs/swagger';
+import { CreateTaskUseCase } from '@/domain/application/use-cases/task/create.task';
+import { FindAllTasksUseCase } from '@/domain/application/use-cases/task/find.all';
+import { DeleteTaskUseCase } from '@/domain/application/use-cases/task/delete.task';
 
 @ApiTags('Tasks')
 @Controller('api/tasks')
 export class TaskController {
-  constructor(private readonly taskRepository: TaskRepository) {}
+  constructor(
+    private readonly createTaskUseCase: CreateTaskUseCase,
+    private readonly findAllTasksUseCase: FindAllTasksUseCase,
+    private readonly deleteTaskUseCase: DeleteTaskUseCase
+  ) {}
 
   @Post(':userId')
   @HttpCode(201)
@@ -40,52 +41,36 @@ export class TaskController {
     status: 400,
     description: 'Bad Request: Invalid input data.',
   })
-  async create(
-    @Param('userId', ParseUUIDPipe) userId: string,
-    @Body() taskDto: TaskDto
-  ) {
-    const task = new Task({
-      id: uuidv4(),
+  async create(@Param('userId') userId: string, @Body() taskDto: TaskDto) {
+    const task = await this.createTaskUseCase.execute({
+      userId,
       title: taskDto.title,
       description: taskDto.description,
-      status: taskDto.status || TaskStatus.PENDING,
     });
-    await this.taskRepository.create(task, userId);
-    return { message: 'Task created successfully' };
+    return {
+      message: 'Task created successfully',
+      task: {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      },
+    };
   }
 
-  @Get()
+  @Get(':id')
   @ApiOperation({ summary: 'Retrieve all tasks' })
   @ApiResponse({
     status: 200,
     description: 'List of tasks retrieved successfully.',
   })
-  async findAll() {
-    return await this.taskRepository.findAll();
+  async findAll(@Param('id') id: string) {
+    return await this.findAllTasksUseCase.execute(id);
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Retrieve a task by ID' })
-  @ApiParam({ name: 'id', type: 'string', format: 'uuid', required: true })
-  @ApiResponse({
-    status: 200,
-    description: 'Task retrieved successfully.',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Task not found.',
-  })
-  async findOne(@Param('id', ParseUUIDPipe) id: string) {
-    const task = await this.taskRepository.findById(id);
-    if (!task) {
-      throw new NotFoundException('Task not found');
-    }
-    return task;
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete a task by ID' })
-  @ApiParam({ name: 'id', type: 'string', format: 'uuid', required: true })
+  @Delete(':taskId')
+  @ApiOperation({ summary: 'Delete a task by ID and User ID' })
+  @ApiParam({ name: 'taskId', type: 'string', format: 'uuid', required: true })
   @ApiResponse({
     status: 200,
     description: 'Task deleted successfully.',
@@ -94,8 +79,8 @@ export class TaskController {
     status: 404,
     description: 'Task not found.',
   })
-  async delete(@Param('id', ParseUUIDPipe) id: string) {
-    await this.taskRepository.delete(id);
+  async delete(@Param('taskId') taskId: string) {
+    await this.deleteTaskUseCase.execute(taskId);
     return { message: 'Task deleted successfully' };
   }
 }

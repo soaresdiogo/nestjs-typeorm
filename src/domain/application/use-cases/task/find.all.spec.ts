@@ -18,8 +18,8 @@ describe('FindAllTasksUseCase', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
     });
-    user.addTask('Task 1');
-    user.addTask('Task 2');
+    user.addTask({ title: 'Task 1', description: 'This is task 1' });
+    user.addTask({ title: 'Task 2', description: 'This is task 2' });
     await userRepository.create(user);
 
     const tasks = await findAllTasksUseCase.execute(user.id);

@@ -28,7 +28,9 @@ export class TypeORMUserRepository implements UserRepository {
       return null;
     }
 
-    return TypeORMUserMapper.toDomain(userEntity);
+    const domainUser = TypeORMUserMapper.toDomain(userEntity);
+    console.log('Mapped domain user:', domainUser);
+    return domainUser;
   }
 
   async findAll(): Promise<User[]> {

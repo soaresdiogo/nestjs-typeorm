@@ -8,6 +8,11 @@ interface UserProps {
   email: string;
 }
 
+interface TaskProps {
+  title: string;
+  description: string;
+}
+
 export class User {
   private _id: string;
   private _name: string;
@@ -43,14 +48,28 @@ export class User {
     return [...this._tasks];
   }
 
-  addTask(title: string): Task {
+  addTask({ title, description }: TaskProps): Task {
     const newTask = new Task({
       id: this._generateTaskId(),
-      title: title,
+      title,
+      description,
       status: TaskStatus.PENDING,
     });
     this._tasks.push(newTask);
     return newTask;
+  }
+
+  getTaskById(taskId: string): Task | undefined {
+    return this.tasks.find((task) => task.id === taskId);
+  }
+
+  deleteTask(taskId: string): boolean {
+    const taskIndex = this._tasks.findIndex((task) => task.id === taskId);
+    if (taskIndex === -1) {
+      return false;
+    }
+    this._tasks.splice(taskIndex, 1);
+    return true;
   }
 
   private _generateTaskId(): string {
